@@ -1,9 +1,9 @@
 from django.db import models
 
 class Item(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(blank=True, null=True)
-    precio = models.DecimalField(max_digits=10, decimal_places=2) # varchar(10,2) en SQL
+    nombre = models.CharField(max_length=100) # varchar(100) en SQL, es un campo de texto con un límite de 100 caracteres
+    descripcion = models.TextField(blank=True, null=True) # text en SQL, es un campo de texto sin límite de caracteres
+    precio = models.DecimalField(max_digits=10, decimal_places=2) # decimal(10,2) en SQL, es un campo numérico con 10 dígitos en total y 2 decimales
     fecha_creacion = models.DateTimeField(auto_now_add=True, db_index=True) # se traduce en sql a timestamp con valor por defecto CURRENT_TIMESTAMP y un índice para optimizar consultas por fecha de creación
 
     # La clase Meta se utiliza para configurar opciones adicionales del modelo, como el nombre de la tabla en la base de datos, el ordenamiento por defecto, etc. en el panel de administración de Django.

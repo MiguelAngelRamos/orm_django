@@ -23,13 +23,14 @@ class IndexCrudView(View):
         #* todo se hace con una condicional o bifuracion (primero debes dejar listas las herramientas 
         # * en los html para que la vista pueda capturar la accion que se desea realizar)
         action = request.POST.get('action') # el valor de la varialbe action es 'create' por que lo toma del value del input hidden del formulario del html
+        print(f"este es el contenido dentro post {request.POST.get('nombre')}")
 
-        actions = {
+        actions_dic = {
             'create': self._handle_create,
             'update': self._handle_update,
         }
 
-        handler = actions.get(action) # handler va tener una referencia a la funcion que se encarga de crear un item, es decir, va ser igual a self._handle_create
+        handler = actions_dic.get(action) # handler va tener una referencia a la funcion que se encarga de crear un item, es decir, va ser igual a self._handle_create
 
         if handler:
             return handler(request) # _handle_create(request)
@@ -38,6 +39,7 @@ class IndexCrudView(View):
         return redirect('index_crud') # si no se encuentra la accion, redirige a la misma pagina (GET)
 
     def _handle_create(self, request):
+        print(f'este es el contenido dentro de handle create ${request.POST}')
         form = ItemForm(request.POST)
         if form.is_valid():
             form.save()

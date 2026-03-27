@@ -74,3 +74,4 @@ INSTALLED_APPS = [
 python manage.py runserver
 ```
 
+
