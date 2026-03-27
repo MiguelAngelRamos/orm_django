@@ -7,9 +7,9 @@ class ItemForm(forms.ModelForm):
         fields = ['nombre', 'descripcion', 'precio']
 
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre'}), #<input type="text" class="form-control">
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}), #<textarea class="form-control" rows="3"></textarea>
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}), #<input type="number" class="form-control">
         }
 
         error_messages = {
