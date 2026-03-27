@@ -21,3 +21,6 @@ class ItemForm(forms.ModelForm):
                 'invalid': 'Ingrese un número válido para el precio.',
             },
         }
+
+
+        #* TODO VALIDACIONES EXPLICITAS 

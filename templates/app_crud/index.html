@@ -21,7 +21,9 @@
         <p class="text-uppercase text-muted small fw-semibold">Formulario</p>
         <h5 class="fw-bold mb-3">Agregar nuevo item</h5>
 
-        <form method="POST" action="#">
+        <form method="POST" action="{% url 'index_crud' %}">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="create">
           <div class="mb-3">
             <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre</label>
             {{ form.nombre}}
