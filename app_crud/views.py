@@ -12,6 +12,7 @@ class IndexCrudView(View):
         context = {
             'items': Item.objects.all(),
             'form': ItemForm(),
+            "edit_form": ItemForm(auto_id='edit_%s'), # esto es para que los campos del formulario de edición tengan un id diferente al formulario de creación, lo cual es importante para evitar conflictos en el DOM y para poder seleccionar los elementos correctamente con JavaScript si es necesario.
         } # Es diccionario que podemos pasar al html para mostrar datos dinámicos
         return render(request, self.template_name, context)
     
@@ -25,6 +26,7 @@ class IndexCrudView(View):
 
         actions = {
             'create': self._handle_create,
+            'update': self._handle_update,
         }
 
         handler = actions.get(action) # handler va tener una referencia a la funcion que se encarga de crear un item, es decir, va ser igual a self._handle_create
@@ -51,3 +53,7 @@ class IndexCrudView(View):
         # form.save()
         # messages.success(request, 'Item creado exitosamente.')
         # return redirect('index_crud')
+
+    def _handle_update(self, request):
+        print('update')
+        return redirect('index_crud')
