@@ -31,13 +31,23 @@ class IndexCrudView(View):
 
         if handler:
             return handler(request) # _handle_create(request)
+        else:
+            messages.error(request, 'Acción no válida.')
         return redirect('index_crud') # si no se encuentra la accion, redirige a la misma pagina (GET)
 
     def _handle_create(self, request):
-        print("Llegaste a la funcion de crear un item")
         form = ItemForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Item creado exitosamente')
         else:
             messages.error(request, 'Error al crear el item. Por favor, corrige los errores en el formulario.')
+        return redirect('index_crud')
+    
+
+        #  if not form.is_valid():
+        #     messages.error(request, 'Error al crear el item. Por favor, corrige los errores en el formulario.')
+        #     return redirect('index_crud')
+        # form.save()
+        # messages.success(request, 'Item creado exitosamente.')
+        # return redirect('index_crud')
