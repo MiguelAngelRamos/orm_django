@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from django.views import View
 from django.shortcuts import redirect, get_object_or_404
@@ -5,6 +6,7 @@ from .models import Item
 from .forms import ItemForm
 from django.contrib import messages
 
+logger = logging.getLogger(__name__) # generar mensajes de log para esta vista, esto es útil para depuración y monitoreo de la aplicación. El logger se puede configurar para escribir en la consola, archivos o servicios de monitoreo según las necesidades del proyecto. herramientas como prometheus o datadog pueden ser utilizadas para recolectar y analizar estos logs en producción, lo que ayuda a identificar problemas, entender el comportamiento de la aplicación y mejorar su rendimiento y confiabilidad.
 class IndexCrudView(View):
     template_name = 'app_crud/index.html'
 
@@ -36,7 +38,8 @@ class IndexCrudView(View):
         if handler:
             return handler(request) # _handle_create(request), _handle_update(request)
         else:
-            messages.error(request, 'Acción no válida.')
+            # este message no deberia mostrarse en el html, por que este es un error que deberia retroalimentar a los desarroladores backend y no a los usuarios finales, lo ideal seria generar un mensaje de log con logger.error('Acción no válida: %s', action) para que los desarrolladores puedan revisar el log y corregir el error, en lugar de mostrar un mensaje de error genérico a los usuarios finales.
+            logger.error('Acción no válida: %s', action)
         return redirect('index_crud') # si no se encuentra la accion, redirige a la misma pagina (GET)
 
     def _handle_create(self, request):
@@ -46,7 +49,7 @@ class IndexCrudView(View):
             form.save()
             messages.success(request, 'Item creado exitosamente')
         else:
-            messages.error(request, 'Error al crear el item. Por favor, corrige los errores en el formulario.')
+            messages.error(request, f'Error al crear el item: {form.errors.as_text()}')
         return redirect('index_crud')
     
 

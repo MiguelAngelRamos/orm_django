@@ -15,6 +15,17 @@
       <h2 class="fw-bold">Gestion de Items</h2>
       <p class="text-muted small">Administra tu inventario desde aqui</p>
     </div>
+    <!-- Tenemos disponible en el contexto global de django la lista de messages -->
+    {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
 
     <div class="row">
       <div class="col-12 col-lg-4">
@@ -84,7 +95,7 @@
                   Editar
                 </button>
 
-                <form method="POST" action="{% url 'index_crud' %}">
+                <form method="POST" action="{% url 'index_crud' %}" onsubmit="return confirm('¿Estás seguro de eliminar este item?')">
                   {% csrf_token %}
                   <input type="hidden" name="action" value="delete">
                   <input type="hidden" name="item_id" value="{{ item.id }}">
