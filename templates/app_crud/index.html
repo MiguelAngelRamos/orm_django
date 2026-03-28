@@ -83,6 +83,13 @@
                   >
                   Editar
                 </button>
+
+                <form method="POST" action="{% url 'index_crud' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="delete">
+                  <input type="hidden" name="item_id" value="{{ item.id }}">
+                  <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
               </td>
             </tr>
             {% empty %}
@@ -103,7 +110,7 @@
       <form action="{% url 'index_crud' %}" method="POST">
           {% csrf_token %}
           <input type="hidden" name="action" value="update">
-          <input type="hidden" name="item_id" value="edit-item-id">
+          <input type="hidden" name="item_id" id="edit-item-id" value="">
      
       <div class="modal-content">
         <div class="modal-header">
@@ -140,10 +147,16 @@
 
   <script>
     const editModal = document.getElementById('editModal');
-    editModal.addEventListener('show.bs.modal', event => {
-      console.log('Modal')
-      const btn = event.relatedTarget; // Botón que activó el modal
+    // El evento show.bs.modal se dispara justo antes de que el modal se muestre, lo que nos da la oportunidad de modificar su contenido dinámicamente antes de que el usuario lo vea.
+    editModal.addEventListener('show.bs.modal', function(event) {
+      
+      const btn = event.relatedTarget; // el botón que disparó el modal, en este caso el botón de editar
       document.getElementById('edit-item-id').value = btn.dataset.id;
+      // auto_id='edit_%s', por lo que el id real del campo es 'edit_nombre'
+      document.getElementById('edit-nombre').value = btn.dataset.nombre;
+      document.getElementById('edit-precio').value = btn.dataset.precio;
+      document.getElementById('edit-descripcion').value = btn.dataset.descripcion;
+   
     });
   </script>
 </body>
