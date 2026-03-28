@@ -48,6 +48,11 @@
             {{ form.descripcion}}
           </div>
 
+            <div class="mb-3">
+              <label for="{{ form.stock.id_for_label }}" class="form-label">Stock</label>
+              {{ form.stock}}
+            </div>
+
           <button type="submit" class="btn btn-outline-success w-100">Agregar Item</button>
         </form>
       </div>
@@ -67,6 +72,7 @@
               <th scope="col">Nombre</th>
               <th scope="col">Descripcion</th>
               <th scope="col">Precio</th>
+              <th scope="col">Stock</th>
               <th scope="col">Fecha Creacion</th>
               <th scope="col">Acciones</th>
             </tr>
@@ -78,6 +84,7 @@
               <td>{{ item.nombre }}</td>
               <td>{{ item.descripcion }}</td>
               <td>{{ item.precio }}</td>
+              <td>{{ item.stock }}</td>
               <td>{{ item.fecha_creacion }}</td>
               <td>
                 <!-- Aquí puedes agregar botones de acción como editar o eliminar -->
@@ -142,6 +149,10 @@
           <div class="mb-3">
             <label for="{{ edit_form.descripcion.id_for_label }}">Descripcion</label>
             {{ edit_form.descripcion }}
+          </div>
+          <div class="mb-3">
+            <label for="{{ edit_form.stock.id_for_label }}">Stock</label>
+            {{ edit_form.stock }} 
           </div>
         </div>
         <div class="modal-footer">
